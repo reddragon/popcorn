@@ -31,6 +31,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="posterView" destination="ad3-jp-S1C" id="StI-P7-hrE"/>
                 <outlet property="summaryLabel" destination="Olh-Xh-pSb" id="0ag-Hx-oyf"/>
                 <outlet property="titleLabel" destination="XKY-8y-UIB" id="vEy-bZ-je8"/>
             </connections>
