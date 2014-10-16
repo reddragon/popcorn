@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"Movie: %@", self.movie);
+    // NSLog(@"Movie: %@", self.movie);
     
     [self.movieTitle setText:self.movie[@"title"]];
     [self.movieDescription setText:self.movie[@"synopsis"]];

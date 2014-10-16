@@ -61,15 +61,12 @@
     return mcell;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *movie = self.movies[indexPath.row];
     MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] init];
     mdvc.movie = movie;
-    //[mdvc.movieTitle setText: movie[@"title"]];
-    //mdvc.movieDescription.text = movie[@"synopsis"];
-    //NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
-    //[mdvc.posterView setImageWithURL:[NSURL URLWithString:posterUrl]];
     [self.navigationController pushViewController:mdvc animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 /*
