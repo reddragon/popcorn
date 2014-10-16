@@ -10,6 +10,7 @@
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "MovieDetailViewController.h"
+#import "SVProgressHUD.h"
 
 @interface MoviesViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,6 +29,7 @@
     self.title = @"Movies";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
+    [SVProgressHUD show];
     
     NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6fjvqr56d486tk629jv3m7sf"];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -36,6 +38,7 @@
         // NSLog(@"response: %@", dictionary);
         self.movies = dictionary[@"movies"];
         [self.tableView reloadData];
+        [SVProgressHUD dismiss];
     }];
 }
 
