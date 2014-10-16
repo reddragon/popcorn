@@ -23,7 +23,7 @@
     [self.movieTitle setText:self.movie[@"title"]];
     [self.movieDescription setText:self.movie[@"synopsis"]];
     NSString* str = [self.movie valueForKeyPath:@"posters.thumbnail"];
-    NSString* newStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_ori.jpg"];
+    NSString* newStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_det.jpg"];
     NSLog(@"str: %@, newStr: %@", str, newStr);
     
     // NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
