@@ -28,6 +28,7 @@
     self.title = @"Movies";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
+    
     NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6fjvqr56d486tk629jv3m7sf"];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -56,12 +57,18 @@
     NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
     [mcell.posterView setImageWithURL:[NSURL URLWithString:posterUrl]];
     
-    NSLog(@"Values %@ %@", movie[@"title"], movie[@"synopsis"]);
+    // NSLog(@"Values %@ %@", movie[@"title"], movie[@"synopsis"]);
     return mcell;
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MovieDetailViewController *mdvc = [[MovieDetailViewController alloc] init];
+    NSDictionary *movie = self.movies[indexPath.row];
+    MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] init];
+    mdvc.movie = movie;
+    //[mdvc.movieTitle setText: movie[@"title"]];
+    //mdvc.movieDescription.text = movie[@"synopsis"];
+    //NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
+    //[mdvc.posterView setImageWithURL:[NSURL URLWithString:posterUrl]];
     [self.navigationController pushViewController:mdvc animated:YES];
 }
 
