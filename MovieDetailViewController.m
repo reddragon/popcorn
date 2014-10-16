@@ -22,8 +22,14 @@
     
     [self.movieTitle setText:self.movie[@"title"]];
     [self.movieDescription setText:self.movie[@"synopsis"]];
-     // NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
-    [self.posterView setImageWithURL:[NSURL URLWithString:[self.movie valueForKeyPath:@"posters.thumbnail"]]];
+    NSString* str = [self.movie valueForKeyPath:@"posters.thumbnail"];
+    NSString* newStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_ori.jpg"];
+    NSLog(@"str: %@, newStr: %@", str, newStr);
+    
+    // NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
+    // UIImage* placeholder = [UIImage imageWit]
+    [self.posterView setImageWithURL:[NSURL URLWithString:str]];
+    [self.posterView setImageWithURL:[NSURL URLWithString:newStr]];
     
 }
 
