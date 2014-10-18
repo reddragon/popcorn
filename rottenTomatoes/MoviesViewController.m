@@ -15,6 +15,9 @@
 @interface MoviesViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *movies;
+@property (strong, nonatomic) NSMutableArray* filteredMovies;
+@property (weak, nonatomic) IBOutlet UISearchBar *movieSearchBar;
+@property BOOL isFiltered;
 
 @end
 
@@ -26,7 +29,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 120;
+    self.movieSearchBar.delegate = self;
     self.title = @"Movies";
+    self.isFiltered = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
     [SVProgressHUD show];
@@ -51,12 +56,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.movies.count;
+    return (self.isFiltered ? self.filteredMovies.count : self.movies.count);
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MovieCell *mcell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = (self.isFiltered ? self.filteredMovies[indexPath.row] : self.movies[indexPath.row]);
     
     [mcell.titleLabel setText:movie[@"title"]];
     [mcell.summaryLabel setText:movie[@"synopsis"]];
@@ -73,6 +78,29 @@
     mdvc.movie = movie;
     [self.navigationController pushViewController:mdvc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UISearchBarDelegate methods
+
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSLog(@"Something changed");
+    if (searchText.length == 0) {
+        self.isFiltered = NO;
+        [self.tableView reloadData];
+    } else {
+        self.isFiltered = YES;
+        self.filteredMovies = [[NSMutableArray alloc] initWithCapacity:self.movies.count];
+        for (NSDictionary* dict in self.movies) {
+            
+            NSString* movieTitle = dict[@"title"];
+            NSRange movieNameRange = [movieTitle rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (movieNameRange.location != NSNotFound) {
+                // NSLog(@"Movie text: %@ search text: %@", movieTitle, searchText);
+                [self.filteredMovies addObject:dict];
+            }
+        }
+        [self.tableView reloadData];
+    }
 }
 
 /*
