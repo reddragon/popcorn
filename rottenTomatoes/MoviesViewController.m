@@ -66,7 +66,9 @@
     [mcell.titleLabel setText:movie[@"title"]];
     [mcell.summaryLabel setText:movie[@"synopsis"]];
     NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
-    [mcell.posterView setImageWithURL:[NSURL URLWithString:posterUrl]];
+    NSString* finalStr = [posterUrl stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_det.jpg"];
+    
+    [mcell.posterView setImageWithURL:[NSURL URLWithString:finalStr]];
     
     // NSLog(@"Values %@ %@", movie[@"title"], movie[@"synopsis"]);
     return mcell;

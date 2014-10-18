@@ -24,13 +24,30 @@
     [self.movieDescription setText:self.movie[@"synopsis"]];
     NSString* str = [self.movie valueForKeyPath:@"posters.thumbnail"];
     NSString* newStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_det.jpg"];
-    // NSString* finalStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_ori.jpg"];
+    NSString* finalStr = [str stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_ori.jpg"];
     NSLog(@"str: %@, newStr: %@", str, newStr);
     
     // NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
     // UIImage* placeholder = [UIImage imageWit]
-    [self.posterView setImageWithURL:[NSURL URLWithString:str]];
+    self.posterView.contentMode = UIViewContentModeScaleAspectFill;
+    self.posterView.clipsToBounds = YES;
+    // [self.posterView setImageWithURL:[NSURL URLWithString:str]];
     [self.posterView setImageWithURL:[NSURL URLWithString:newStr]];
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:finalStr]];
+    [self.posterView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        NSLog(@"Successful!");
+        self.posterView.image = image;
+        self.posterView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        CATransition* transition = [CATransition animation];
+        transition.type = kCATransitionFade;
+        transition.duration = 0.34;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [self.posterView.layer addAnimation:transition forKey:nil];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        NSLog(@"Failed. :(");
+    }];
     // [self.posterView setImageWithURL:[NSURL URLWithString:finalStr]];
 }
 
