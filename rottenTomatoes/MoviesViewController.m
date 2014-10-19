@@ -27,13 +27,19 @@
 
 - (void) reloadTableData {
     [SVProgressHUD show];
+    self.movieSearchBar.hidden = YES;
     
     NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6fjvqr56d486tk629jv3m7sf"];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:20];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         [SVProgressHUD dismiss];
         //NSLog(@"Conn Error: %@", connectionError);
         if (connectionError == nil) {
+            [UIView animateWithDuration:1.0 animations:^() {
+                self.networkErrorView.alpha = 0.0;
+            }];
+
+            self.movieSearchBar.hidden = NO;
             NSLog(@"Response: %@", response);
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             // NSLog(@"response: %@", dictionary);
@@ -41,7 +47,6 @@
             [self.tableView reloadData];
             
         } else {
-            // self.movieSearchBar.hidden = YES;
             [UIView animateWithDuration:1.5 animations:^() {
                 self.networkErrorView.alpha = 0.5;
             }];
@@ -107,9 +112,30 @@
     [mcell.Actors setText:joinedCastNames];
     
     NSString* criticsScore = movie[@"ratings"][@"critics_score"];
-    [mcell.score setText:[NSString stringWithFormat:@"%@%%", criticsScore]];
+    [mcell.score setText:[NSString stringWithFormat:@"%@", criticsScore]];
     NSString* audienceScore = movie[@"ratings"][@"audience_score"];
-    [mcell.audienceScore setText:[NSString stringWithFormat:@"%@%%", audienceScore]];
+    [mcell.audienceScore setText:[NSString stringWithFormat:@"%@", audienceScore]];
+    
+    int criticsScoreVal = [criticsScore intValue];
+    if (criticsScoreVal > 80) {
+        [mcell.score setTextColor:[UIColor redColor]];
+        [mcell.score setFont:[UIFont fontWithName:@"GillSans-Bold" size:13]];
+        // [mcell.score setText
+    } else {
+        [mcell.score setTextColor:[UIColor blackColor]];
+        [mcell.score setFont:[UIFont fontWithName:@"GillSans" size:13]];
+    }
+    
+    int audienceScoreVal = [audienceScore intValue];
+    if (audienceScoreVal > 80) {
+        [mcell.audienceScore setTextColor:[UIColor redColor]];
+        [mcell.audienceScore setFont:[UIFont fontWithName:@"GillSans-Bold" size:13]];
+        // [mcell.score setText
+    } else {
+        [mcell.audienceScore setTextColor:[UIColor blackColor]];
+        [mcell.audienceScore setFont:[UIFont fontWithName:@"GillSans" size:13]];
+    }
+
     
     //[mcell.summaryLabel setText:movie[@"synopsis"]];
     NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
