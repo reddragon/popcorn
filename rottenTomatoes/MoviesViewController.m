@@ -19,23 +19,13 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *movieSearchBar;
 @property BOOL isFiltered;
 @property (weak, nonatomic) IBOutlet UIView *networkErrorView;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
 @implementation MoviesViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.rowHeight = 120;
-    self.movieSearchBar.delegate = self;
-    self.title = @"Movies";
-    self.isFiltered = NO;
-    self.networkErrorView.alpha = 0.0;
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
+- (void) reloadTableData {
     [SVProgressHUD show];
     
     NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6fjvqr56d486tk629jv3m7sf"];
@@ -51,11 +41,38 @@
             [self.tableView reloadData];
             
         } else {
+            self.movieSearchBar.hidden = YES;
             [UIView animateWithDuration:1.5 animations:^() {
                 self.networkErrorView.alpha = 0.5;
             }];
         }
     }];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.rowHeight = 120;
+    self.movieSearchBar.delegate = self;
+    self.title = @"Movies";
+    self.isFiltered = NO;
+    self.networkErrorView.alpha = 0.0;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    [self setRefreshControl:self.refreshControl];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
+    [self reloadTableData];
+}
+
+- (void) refreshTable {
+    [self reloadTableData];
+    [self.refreshControl endRefreshing];
+    NSLog(@"Just made the call again.");
 }
 
 - (void)didReceiveMemoryWarning {
