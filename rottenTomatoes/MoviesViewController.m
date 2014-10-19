@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray* filteredMovies;
 @property (weak, nonatomic) IBOutlet UISearchBar *movieSearchBar;
 @property BOOL isFiltered;
+@property (weak, nonatomic) IBOutlet UIView *networkErrorView;
 
 @end
 
@@ -39,13 +40,19 @@
     NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6fjvqr56d486tk629jv3m7sf"];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSLog(@"Response: %@", response);
-        
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        // NSLog(@"response: %@", dictionary);
-        self.movies = dictionary[@"movies"];
-        [self.tableView reloadData];
         [SVProgressHUD dismiss];
+        //NSLog(@"Conn Error: %@", connectionError);
+        if (connectionError == nil) {
+            self.networkErrorView.hidden = YES;
+            NSLog(@"Response: %@", response);
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            // NSLog(@"response: %@", dictionary);
+            self.movies = dictionary[@"movies"];
+            [self.tableView reloadData];
+            
+        } else {
+            self.networkErrorView.hidden = NO;
+        }
          
     }];
 }
