@@ -33,6 +33,7 @@
     self.movieSearchBar.delegate = self;
     self.title = @"Movies";
     self.isFiltered = NO;
+    self.networkErrorView.alpha = 0.0;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
     [SVProgressHUD show];
@@ -43,7 +44,6 @@
         [SVProgressHUD dismiss];
         //NSLog(@"Conn Error: %@", connectionError);
         if (connectionError == nil) {
-            self.networkErrorView.hidden = YES;
             NSLog(@"Response: %@", response);
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             // NSLog(@"response: %@", dictionary);
@@ -51,9 +51,10 @@
             [self.tableView reloadData];
             
         } else {
-            self.networkErrorView.hidden = NO;
+            [UIView animateWithDuration:1.5 animations:^() {
+                self.networkErrorView.alpha = 0.5;
+            }];
         }
-         
     }];
 }
 
