@@ -14,6 +14,7 @@ Work Done:
 * Modifying the Navbar: Navbar is translucent, so when you scroll the movies, you can see them passing through the navbar.
 * Displaying the Rotten Tomato audience and critics score, and highlighting them when the score > 80 for any of the categories (along with runtime, rating, cast etc. on main screen).
 * LaunchScreen tweaks and AppIcon.
+* Minor UI tweaks (background image in the detail view, rounded corners for the rating label, etc.)
 
 Problems:
 * AppIcon isn't displayed for some reason.
