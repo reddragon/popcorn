@@ -41,7 +41,7 @@
             [self.tableView reloadData];
             
         } else {
-            self.movieSearchBar.hidden = YES;
+            // self.movieSearchBar.hidden = YES;
             [UIView animateWithDuration:1.5 animations:^() {
                 self.networkErrorView.alpha = 0.5;
             }];
@@ -55,7 +55,7 @@
     // Do any additional setup after loading the view from its nib.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 120;
+    self.tableView.rowHeight = 150;
     self.movieSearchBar.delegate = self;
     self.title = @"Movies";
     self.isFiltered = NO;
@@ -90,7 +90,23 @@
     NSDictionary *movie = (self.isFiltered ? self.filteredMovies[indexPath.row] : self.movies[indexPath.row]);
     
     [mcell.titleLabel setText:movie[@"title"]];
-    [mcell.summaryLabel setText:movie[@"synopsis"]];
+    [mcell.runningTime setText:[NSString stringWithFormat:@"%@ minutes", movie[@"runtime"]]];
+    [mcell.Rating setText:movie[@"mpaa_rating"]];
+    [mcell.Rating.layer setBorderWidth:0.5];
+    [mcell.Rating.layer setBorderColor:[UIColor grayColor].CGColor];
+    [mcell.Rating.layer setCornerRadius:6];
+    
+    
+    NSMutableArray* castNames = [[NSMutableArray alloc] init];
+    NSArray* abridgedCast = movie[@"abridged_cast"];
+    for (NSObject* o in abridgedCast) {
+        NSDictionary* dict = (NSDictionary *)o;
+        [castNames addObject:dict[@"name"]];
+    }
+    NSString* joinedCastNames = [castNames componentsJoinedByString:@",  "];
+    [mcell.Actors setText:joinedCastNames];
+    
+    //[mcell.summaryLabel setText:movie[@"synopsis"]];
     NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];
     NSString* finalStr = [posterUrl stringByReplacingOccurrencesOfString:@"_tmb.jpg" withString:@"_det.jpg"];
     

@@ -11,5 +11,9 @@
 @interface MovieCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *runningTime;
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
+@property (weak, nonatomic) IBOutlet UILabel *Rating;
+@property (weak, nonatomic) IBOutlet UILabel *Actors;
+@property (weak, nonatomic) IBOutlet UILabel *score;
 @end
