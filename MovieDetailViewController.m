@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.alpha = 0.75;
     // Do any additional setup after loading the view from its nib.
     // NSLog(@"Movie: %@", self.movie);
     
