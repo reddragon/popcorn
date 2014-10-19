@@ -55,7 +55,7 @@
     // Do any additional setup after loading the view from its nib.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 150;
+    self.tableView.rowHeight = 140;
     self.movieSearchBar.delegate = self;
     self.title = @"Movies";
     self.isFiltered = NO;
@@ -92,9 +92,9 @@
     [mcell.titleLabel setText:movie[@"title"]];
     [mcell.runningTime setText:[NSString stringWithFormat:@"%@ minutes", movie[@"runtime"]]];
     [mcell.Rating setText:movie[@"mpaa_rating"]];
-    [mcell.Rating.layer setBorderWidth:0.5];
+    [mcell.Rating.layer setBorderWidth:0.4];
     [mcell.Rating.layer setBorderColor:[UIColor grayColor].CGColor];
-    [mcell.Rating.layer setCornerRadius:6];
+    [mcell.Rating.layer setCornerRadius:4];
     
     
     NSMutableArray* castNames = [[NSMutableArray alloc] init];
@@ -105,6 +105,11 @@
     }
     NSString* joinedCastNames = [castNames componentsJoinedByString:@",  "];
     [mcell.Actors setText:joinedCastNames];
+    
+    NSString* criticsScore = movie[@"ratings"][@"critics_score"];
+    [mcell.score setText:[NSString stringWithFormat:@"%@%%", criticsScore]];
+    NSString* audienceScore = movie[@"ratings"][@"audience_score"];
+    [mcell.audienceScore setText:[NSString stringWithFormat:@"%@%%", audienceScore]];
     
     //[mcell.summaryLabel setText:movie[@"synopsis"]];
     NSString *posterUrl = [movie valueForKeyPath:@"posters.thumbnail"];

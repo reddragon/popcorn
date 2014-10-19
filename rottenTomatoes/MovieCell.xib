@@ -13,6 +13,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ad3-jp-S1C">
+                        <rect key="frame" x="8" y="8" width="83" height="119"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Olh-Xh-pSb">
                         <rect key="frame" x="93" y="132" width="226" height="19"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
@@ -33,7 +36,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ro6-9H-caS">
                         <rect key="frame" x="276" y="33" width="34" height="21"/>
-                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -43,21 +46,31 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Audience Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfs-vN-9r3">
-                        <rect key="frame" x="100" y="50" width="149" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Critics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfs-vN-9r3">
+                        <rect key="frame" x="117" y="50" width="34" height="21"/>
                         <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ad3-jp-S1C">
-                        <rect key="frame" x="8" y="8" width="83" height="119"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="au6-KA-gLP">
+                        <rect key="frame" x="99" y="54" width="15" height="14"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PopCorn" translatesAutoresizingMaskIntoConstraints="NO" id="dPf-u6-kLO">
+                        <rect key="frame" x="159" y="54" width="15" height="14"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Audience" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kv8-dA-0CP">
+                        <rect key="frame" x="177" y="50" width="48" height="21"/>
+                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="Actors" destination="NjS-TJ-OES" id="0xl-xG-RxM"/>
                 <outlet property="Rating" destination="Ro6-9H-caS" id="rqC-pu-f0b"/>
+                <outlet property="audienceScore" destination="Kv8-dA-0CP" id="Iu0-ne-z9D"/>
                 <outlet property="posterView" destination="ad3-jp-S1C" id="StI-P7-hrE"/>
                 <outlet property="runningTime" destination="Y2o-W7-cbJ" id="mVV-fc-xEt"/>
                 <outlet property="score" destination="vfs-vN-9r3" id="8U2-xg-7fb"/>
@@ -67,4 +80,8 @@
             <point key="canvasLocation" x="197.5" y="418"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Image" width="40" height="40"/>
+        <image name="PopCorn" width="40" height="54"/>
+    </resources>
 </document>
