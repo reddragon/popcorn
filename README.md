@@ -20,7 +20,12 @@ Problems:
 * AppIcon isn't displayed for some reason.
 * Higher res images don't scale to fit in the screen properly.
 
+App Walkthrough
+---------------
 ![App Demo](http://i.imgur.com/1BuJidk.gif)
 
-
+Handling Network Error
+----------------------
 ![Network Error Demo](http://i.imgur.com/iuE5lLm.gif)
+
+
