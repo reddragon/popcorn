@@ -19,3 +19,5 @@ Work Done:
 Problems:
 * AppIcon isn't displayed for some reason.
 * Higher res images don't scale to fit in the screen properly.
+
+![App Demo](http://i.imgur.com/1BuJidk.gif)
