@@ -148,7 +148,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = (self.isFiltered ? self.filteredMovies[indexPath.row] : self.movies[indexPath.row]);
     MovieDetailViewController* mdvc = [[MovieDetailViewController alloc] init];
     mdvc.movie = movie;
     [self.navigationController pushViewController:mdvc animated:YES];
